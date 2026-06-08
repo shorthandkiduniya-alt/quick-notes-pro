@@ -5,58 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>QuickNotes Pro</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: #fafafa; color: #2c3e50; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        /* Clean Professional Header Area */
-        .app-main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 10px 20px; background: #fafafa; }
-        .app-main-header .app-title { font-size: 24px; font-weight: 700; color: #1a252f; letter-spacing: -0.5px; }
-        .app-main-header .header-action-icons { display: flex; gap: 20px; font-size: 20px; color: #7f8c8d; }
+        /* Layout Header */
+        .app-main-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 10px 20px; }
+        .app-title { font-size: 24px; font-weight: 700; color: #1a252f; }
+        .header-action-icons { display: flex; gap: 20px; font-size: 20px; color: #7f8c8d; }
 
-        /* Folders Minimalist Bar */
-        .folder-bar { display: flex; gap: 20px; padding: 10px 20px; overflow-x: auto; white-space: nowrap; background: #fafafa; margin-bottom: 5px; }
-        .folder-tab { font-size: 14px; color: #95a5a6; font-weight: 600; padding: 4px 0; cursor: pointer; }
+        .folder-bar { display: flex; gap: 20px; padding: 10px 20px; background: #fafafa; margin-bottom: 10px; }
+        .folder-tab { font-size: 14px; color: #95a5a6; font-weight: 600; padding: 4px 0; }
         .folder-tab.active { color: #1a252f; border-bottom: 2px solid #2c3e50; }
 
-        /* Views Layout */
-        .view { display: none; flex-direction: column; flex: 1; padding: 15px 20px; overflow-y: auto; height: calc(100vh - 130px); }
+        /* Smooth Screen Toggling */
+        .view { display: none; flex-direction: column; flex: 1; padding: 20px; overflow-y: auto; }
         .active-view { display: flex !important; }
 
-        /* Dashboard Notes List (Multiple Cards Supported) */
-        .notes-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 90px; }
-        .note-card { background: #ffffff; padding: 16px; border-radius: 12px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.02); border: 1px solid #eaeaea; position: relative; }
-        .note-card .preview-title { font-size: 16px; font-weight: 600; color: #1a252f; margin-bottom: 6px; word-break: break-all; }
-        .note-card .preview-text { font-size: 13px; color: #7f8c8d; margin-bottom: 8px; word-break: break-all; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .note-card .date { font-size: 11px; color: #bdc3c7; font-weight: 500; }
-        .delete-btn { position: absolute; bottom: 14px; right: 16px; background: none; border: none; color: #e74c3c; font-size: 14px; cursor: pointer; opacity: 0.7; padding: 5px; font-weight: bold; }
+        /* Multiple Notes List Container */
+        .notes-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 100px; }
+        .note-card { background: #ffffff; padding: 16px; border-radius: 12px; border: 1px solid #eaeaea; position: relative; cursor: pointer; }
+        .note-card b { font-size: 16px; color: #1a252f; display: block; margin-bottom: 4px; }
+        .note-card p { font-size: 13px; color: #7f8c8d; }
+        .card-date { font-size: 11px; color: #bdc3c7; margin-top: 6px; }
+        .delete-btn { position: absolute; bottom: 14px; right: 16px; background: none; border: none; color: #e74c3c; font-size: 13px; font-weight: bold; cursor: pointer; padding: 5px; }
 
-        /* Premium Floating Action Trigger */
-        .bottom-create-trigger { position: fixed; bottom: 25px; left: 5%; width: 90%; background: #2c3e50; border: none; border-radius: 30px; padding: 15px 24px; font-size: 15px; color: #ffffff; box-shadow: 0 4px 15px rgba(44, 62, 80, 0.2); text-align: center; font-weight: 600; z-index: 10; cursor: pointer; }
+        /* Fixed Touch Button at Bottom */
+        .bottom-create-trigger { position: fixed; bottom: 25px; left: 5%; width: 90%; background: #2c3e50; border: none; border-radius: 30px; padding: 16px 24px; font-size: 16px; color: #ffffff; text-align: center; font-weight: 600; z-index: 9999; cursor: pointer; display: block; }
 
-        /* Premium Professional Editor Styling */
-        .editor-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #eaeaea; margin-bottom: 20px; }
-        .back-btn { background: none; border: none; color: #2c3e50; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .note-title-input { width: 100%; border: none; background: transparent; font-size: 26px; font-weight: 700; outline: none; margin-bottom: 8px; color: #1a252f; letter-spacing: -0.5px; }
-        .meta-info { font-size: 12px; color: #95a5a6; margin-bottom: 15px; font-weight: 500; }
+        /* Premium Professional Editor Layout */
+        .editor-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #eaeaea; margin-bottom: 15px; }
+        .back-btn { background: #cbd5e1; border: none; color: #2c3e50; font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 20px; }
+        .note-title-input { width: 100%; border: none; background: transparent; font-size: 26px; font-weight: 700; outline: none; margin-bottom: 8px; color: #1a252f; }
+        .meta-info { font-size: 12px; color: #95a5a6; margin-bottom: 15px; }
         .mind-map-badge { display: inline-block; background: #e8f4fd; color: #2980b9; border: 1px dashed #3498db; padding: 6px 14px; font-size: 12px; border-radius: 20px; font-weight: 600; margin-bottom: 15px; cursor: pointer; }
         
-        /* Content Workspace */
-        .editor-container { flex: 1; display: flex; flex-direction: column; min-height: 200px; padding-bottom: 70px; }
-        .rich-editor { width: 100%; flex: 1; border: none; background: transparent; font-size: 16px; line-height: 1.6; outline: none; color: #2c3e50; overflow-y: auto; }
+        /* Advanced Editable Area */
+        .editor-container { flex: 1; display: flex; flex-direction: column; padding-bottom: 60px; }
+        .rich-editor { width: 100%; flex: 1; border: none; background: transparent; font-size: 17px; line-height: 1.6; outline: none; color: #2c3e50; overflow-y: auto; min-height: 200px; }
         .rich-editor[placeholder]:empty:before { content: attr(placeholder); color: #bdc3c7; }
         
-        /* Media Attachments */
+        /* Attachments inside Note Workspace */
         .embedded-media { max-width: 100%; border-radius: 8px; margin: 10px 0; display: block; }
         .audio-item { display: flex; align-items: center; background: #f1f2f6; padding: 10px; border-radius: 8px; margin: 8px 0; border: 1px solid #e4e7ed; }
 
-        /* Classic Minimalist Editor Toolbars */
-        .toolbar { background: #ffffff; border-top: 1px solid #eaeaea; display: flex; justify-content: space-around; align-items: center; padding: 14px 5px; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100; box-shadow: 0 -2px 10px rgba(0,0,0,0.02); }
-        .toolbar button { background: none; border: none; font-size: 14px; font-weight: 600; color: #7f8c8d; cursor: pointer; padding: 5px; }
+        /* Interactive Action Toolbars */
+        .toolbar { background: #ffffff; border-top: 1px solid #eaeaea; display: flex; justify-content: space-around; align-items: center; padding: 14px 5px; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100; }
+        .toolbar button { background: none; border: none; font-size: 14px; font-weight: 600; color: #7f8c8d; cursor: pointer; padding: 10px; }
         .tools-popup { display: none; background: #ffffff; border-top: 1px solid #eaeaea; position: fixed; bottom: 48px; left: 0; width: 100%; padding: 12px; gap: 10px; justify-content: center; z-index: 99; flex-wrap: wrap; box-shadow: 0 -4px 15px rgba(0,0,0,0.04); }
         .tool-btn { background: #f8f9fa; border: 1px solid #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 600; color: #4a5568; }
 
-        /* Fullscreen Sketch Tool Styling */
-        .canvas-view-style { display: none; flex-direction: column; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 200; padding: 20px; }
+        /* Fullscreen Painting View */
+        .canvas-view-style { display: none; flex-direction: column; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 20000; padding: 20px; }
         .canvas-container { flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; margin: 15px 0; position: relative; }
         #paintCanvas { width: 100%; height: 100%; background: #ffffff; touch-action: none; border-radius: 12px; }
         .color-palette { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
@@ -65,73 +64,83 @@
 </head>
 <body>
 
-    <!-- TOP HEADER -->
-    <div id="listViewHeader" class="app-main-header">
-        <div class="app-title">QuickNotes</div>
-        <div class="header-action-icons"><div>🔍</div><div>⚙️</div></div>
-    </div>
-
-    <!-- MINIMAL FOLDERS BAR -->
-    <div id="listViewFolders" class="folder-bar">
-        <div class="folder-tab active">All Notes</div>
-        <div class="folder-tab">Personal</div>
-        <div class="folder-tab">Work</div>
-        <div class="folder-tab">Ideas</div>
-    </div>
-
     <!-- 1. DASHBOARD VIEW -->
     <div id="listView" class="view active-view">
+        <div class="app-main-header">
+            <div class="app-title">QuickNotes</div>
+            <div class="header-action-icons"><div>🔍</div><div>⚙️</div></div>
+        </div>
+        <div class="folder-bar">
+            <div class="folder-tab active">All Notes</div>
+            <div class="folder-tab">Personal</div>
+            <div class="folder-tab">Work</div>
+        </div>
         <div id="notesContainer" class="notes-list"></div>
-        <div class="bottom-create-trigger" onclick="createNewNote()">+ Create a note</div>
+        <!-- Perfect Touch Unified Trigger Button -->
+        <button class="bottom-create-trigger" id="createNoteTrigger" onclick="openNewBlankNote()">+ Create a note</button>
     </div>
 
     <!-- 2. PROFESSIONAL EDITOR VIEW -->
     <div id="editorView" class="view">
         <div class="editor-header">
-            <button class="back-btn" onclick="showListView()">✕ Close & Save</button>
-            <div id="recordingStatus" style="font-size:12px; color:#e74c3c; font-weight:600; display:none;">🎙 Recording audio...</div>
+            <button class="back-btn" onclick="saveAndGoBack()">✕ Close & Save</button>
+            <div id="recordingStatus" style="font-size:12px; color:#e74c3c; font-weight:600; display:none;">🎙 Recording...</div>
             <div style="font-size: 13px; font-weight: 600; color: #2ecc71;">Auto Saving</div>
         </div>
         
         <input type="text" id="noteTitle" class="note-title-input" placeholder="Title">
         <div class="meta-info" id="metaInfoText">8 June | 0 characters</div>
         
-        <div onclick="insertMindMap()" class="mind-map-badge">💡 Insert Mind Map Template</div>
+        <div onclick="addMindMap()" class="mind-map-badge">💡 Insert Mind Map Template</div>
 
         <div class="editor-container">
             <div id="richEditor" class="rich-editor" contenteditable="true" placeholder="Start writing here..."></div>
         </div>
 
-        <!-- RICH FORMATTING POPUP -->
+        <!-- FORMATTING UTILITY -->
         <div id="formattingPopup" class="tools-popup">
-            <button class="tool-btn" onclick="formatText('bold')"><b>B</b></button>
-            <button class="tool-btn" onclick="formatText('italic')"><i>I</i></button>
-            <button class="tool-btn" onclick="formatText('underline')"><u>U</u></button>
-            <button class="tool-btn" onclick="formatText('foreColor', '#e74c3c')"><span style="color:red">Red Text</span></button>
-            <button class="tool-btn" onclick="formatText('foreColor', '#2c3e50')"><span>Normal Color</span></button>
-            <button class="tool-btn" onclick="formatText('hiliteColor', '#fff3cd')"><mark>Highlight</mark></button>
-            <button class="tool-btn" onclick="formatText('hiliteColor', '#ffffff')">No Highlite</button>
-            <button class="tool-btn" onclick="formatText('justifyLeft')">Align L</button>
-            <button class="tool-btn" onclick="formatText('justifyCenter')">Center</button>
-            <button class="tool-btn" onclick="formatText('justifyRight')">Align R</button>
+            <button class="tool-btn" onclick="applyFormat('bold')"><b>B</b></button>
+            <button class="tool-btn" onclick="applyFormat('italic')"><i>I</i></button>
+            <button class="tool-btn" onclick="applyFormat('underline')"><u>U</u></button>
+            <button class="tool-btn" onclick="applyFormat('foreColor', '#e74c3c')"><span style="color:red">Red</span></button>
+            <button class="tool-btn" onclick="applyFormat('foreColor', '#2c3e50')">Normal</button>
+            <button class="tool-btn" onclick="applyFormat('hiliteColor', '#fff3cd')"><mark>Highlight</mark></button>
+            <button class="tool-btn" onclick="applyFormat('hiliteColor', '#ffffff')">Clean</button>
+            <button class="tool-btn" onclick="applyFormat('justifyLeft')">Left</button>
+            <button class="tool-btn" onclick="applyFormat('justifyCenter')">Center</button>
+            <button class="tool-btn" onclick="applyFormat('justifyRight')">Right</button>
         </div>
 
-        <!-- EDITOR BOTTOM TOOLBAR -->
+        <!-- BOTTOM TOOLBAR -->
         <div class="toolbar">
-            <button onclick="togglePopup('formattingPopup')">Format</button>
-            <button onclick="triggerImageUpload()">Gallery</button>
-            <button onclick="openCanvasView()">Sketch</button>
-            <button id="recordBtn" onclick="toggleAudioRecording()">Record</button>
-            <button onclick="formatText('insertUnorderedList')">Bullet Points</button>
+            <button onclick="toggleToolbarPopup('formattingPopup')">Format</button>
+            <button onclick="triggerFileSelect()">Gallery</button>
+            <button onclick="openSketchPad()">Sketch</button>
+            <button id="recordBtn" onclick="handleVoiceRecord()">Record</button>
+            <button onclick="applyFormat('insertUnorderedList')">Points</button>
         </div>
-        <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
+        <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="insertGalleryPhoto(event)">
     </div>
 
-    <!-- 3. DRAWING & SKETCH CANVAS VIEW -->
+    <!-- 3. DRAWING CANVAS WORKSPACE -->
     <div id="canvasView" class="canvas-view-style">
         <div class="editor-header">
-            <button class="back-btn" onclick="closeCanvasView(false)">Cancel</button>
+            <button class="back-btn" onclick="closeSketchPad(false)">Cancel</button>
             <h3 style="font-size:16px; font-weight:600;">Canvas Drawing</h3>
-            <button class="back-btn" style="background:#2ecc71; color:white; padding:6px 14px; border-radius:20px;" onclick="closeCanvasView(true)">Insert Sketch</button>
+            <button class="back-btn" style="background:#2ecc71; color:white; padding:6px 14px; border-radius:20px;" onclick="closeSketchPad(true)">Insert Sketch</button>
         </div>
-        
+        <div class="color-palette">
+            <div class="color-dot" style="background:#2c3e50" onclick="setInkColor('#2c3e50')"></div>
+            <div class="color-dot" style="background:#e74c3c" onclick="setInkColor('#e74c3c')"></div>
+            <div class="color-dot" style="background:#2ecc71" onclick="setInkColor('#2ecc71')"></div>
+            <div class="color-dot" style="background:#f1c40f" onclick="setInkColor('#f1c40f')"></div>
+        </div>
+        <div class="canvas-container"><canvas id="paintCanvas"></canvas></div>
+    </div>
+
+<script>
+    let savedNotesList = JSON.parse(localStorage.getItem('final_secure_notes')) || [];
+    let activeNoteId = null;
+    let voiceRecorderObj = null;
+    let voiceChunks = [];
+    
